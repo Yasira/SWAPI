@@ -23,6 +23,10 @@ public class SwApiTest {
 	WebResource webResource;
 	
 	String configPath=System.getProperty("user.dir")+"\\configdata\\config.properties";
+	String jsonSchemaID=System.getProperty("user.dir")+"\\configdata\\data.json";
+	String JsonSchemaforAll=System.getProperty("user.dir")+"\\configdata\\Schema_forAll.json";
+	
+	
 	Client client;
 	
 	@BeforeMethod(groups = { "commonTest"})
@@ -31,12 +35,8 @@ public class SwApiTest {
 		client = Client.create();
 		Properties log4jProperties=new Properties();
 		log4jProperties.load(new FileInputStream(System.getProperty("user.dir")+"\\configdata\\log4j.properties"));
-		//log4jProperties.setProperty("log4j.appender.file.File",System.getProperty("user.dir")+"Logs\\"+method.getName()+".log");
-	    PropertyConfigurator.configure(log4jProperties);
+		 PropertyConfigurator.configure(log4jProperties);
 	
-		
-		
-		
 		
 	}
 	/**
@@ -49,7 +49,7 @@ public class SwApiTest {
 	@Test(groups = { "APITest"})
 	public void swPlanetsAllTest()  throws Exception{
 		String URL=Api_ClientUtil.readPropertiesFile(configPath,"URL");
-		
+		String jsonSchema=ValidationUtils.readFileAsString(JsonSchemaforAll);
 		webResource = client .resource(URL);
 		
 		ClientResponse response = webResource.accept("application/json").header("user-agent", " ")
@@ -59,6 +59,7 @@ public class SwApiTest {
 		String output = response.getEntity(String.class);
 		log.info("Output response json "+output);
 		assertTrue(Api_ClientUtil.isJSONValid(output),"Response is not a valid json format");
+		assertTrue(ValidationUtils.isJsonSchemaValid(jsonSchema, output),"Json Schema is not valid");
 		assertTrue(output.contains("count"),"Response is not a valid json format");
 		
 		
@@ -78,6 +79,8 @@ public class SwApiTest {
 	public void swPlanetsWithId() throws Exception {
 		String URL=Api_ClientUtil.readPropertiesFile(configPath,"URL");
 		String path=Api_ClientUtil.readPropertiesFile(configPath,"PathID");
+		String jsonSchema=ValidationUtils.readFileAsString(jsonSchemaID);
+		
 		
 		webResource = client .resource(URL);
 		
@@ -89,9 +92,13 @@ public class SwApiTest {
 		String output = response.getEntity(String.class);
 		log.info("Output response json "+output);
 		assertTrue(Api_ClientUtil.isJSONValid(output),"Response is not a valid json format");
+		assertTrue(ValidationUtils.isJsonSchemaValid(jsonSchema, output),"Json Schema is not valid");
+		
 		assertTrue(output.contains("Alderaan"),"Output response is not as expected");
 		
 		
 		
 	}
+	
+	
 }

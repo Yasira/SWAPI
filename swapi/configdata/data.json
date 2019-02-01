@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rotation_period": {
+      "type": "string",
+      "minLength": 1
+    },
+    "orbital_period": {
+      "type": "string",
+      "minLength": 1
+    },
+    "diameter": {
+      "type": "string",
+      "minLength": 1
+    },
+    "climate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gravity": {
+      "type": "string",
+      "minLength": 1
+    },
+    "terrain": {
+      "type": "string",
+      "minLength": 1
+    },
+    "surface_water": {
+      "type": "string",
+      "minLength": 1
+    },
+    "population": {
+      "type": "string",
+      "minLength": 1
+    },
+    "residents": {
+      "type": "array",
+      "items": {
+        
+        "properties": {}
+      }
+    },
+    "films": {
+      "type": "array",
+      "items": {
+        
+        "properties": {}
+      }
+    },
+    "created": {
+      "type": "string",
+      "minLength": 1
+    },
+    "edited": {
+      "type": "string",
+      "minLength": 1
+    },
+    "url": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "name",
+    "rotation_period",
+    "orbital_period",
+    "diameter",
+    "climate",
+    "gravity",
+    "terrain",
+    "surface_water",
+    "population",
+    "residents",
+    "films",
+    "created",
+    "edited",
+    "url"
+  ]
+}
