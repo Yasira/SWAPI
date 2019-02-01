@@ -26,52 +26,14 @@ public class ValidationUtils {
         return JsonLoader.fromString(jsonText);
     } // getJsonNode(text) ends
     
-    public static JsonNode getJsonNode(File jsonFile) 
-    throws IOException 
-    {
-        return JsonLoader.fromFile(jsonFile);
-    } // getJsonNode(File) ends
- 
-    public static JsonNode getJsonNode(URL url) 
-    throws IOException 
-    {
-        return JsonLoader.fromURL(url);
-    } // getJsonNode(URL) ends
-    
-    public static JsonNode getJsonNodeFromResource(String resource) 
-    throws IOException
-    {
-        return JsonLoader.fromResource(resource);
-    } // getJsonNode(Resource) ends
-    
+  
     public static JsonSchema getSchemaNode(String schemaText)
     throws IOException, ProcessingException 
     {
         final JsonNode schemaNode = getJsonNode(schemaText);
         return _getSchemaNode(schemaNode);
-    } // getSchemaNode(text) ends
- 
-    public static JsonSchema getSchemaNode(File schemaFile)
-    throws IOException, ProcessingException
-    {
-        final JsonNode schemaNode = getJsonNode(schemaFile);
-        return _getSchemaNode(schemaNode);
-    } // getSchemaNode(File) ends
- 
-    public static JsonSchema getSchemaNode(URL schemaFile)
-    throws IOException, ProcessingException
-    {
-        final JsonNode schemaNode = getJsonNode(schemaFile);
-        return _getSchemaNode(schemaNode);
-    } // getSchemaNode(URL) ends
- 
-    public static JsonSchema getSchemaNodeFromResource(String resource)
-    throws IOException, ProcessingException 
-    {
-        final JsonNode schemaNode = getJsonNodeFromResource(resource);
-        return _getSchemaNode(schemaNode);
-    } // getSchemaNode() ends
- 
+    } 
+    
     public static void validateJson(JsonSchema jsonSchemaNode, JsonNode jsonNode)
     throws ProcessingException 
     {
@@ -89,6 +51,14 @@ public class ValidationUtils {
         return report.isSuccess();
     } // validateJson(Node) ends
     
+    /**
+     * Validating the Json Schema with the output of API
+     * @param schemaText
+     * @param jsonText
+     * @return
+     * @throws ProcessingException
+     * @throws IOException
+     */
     public static boolean isJsonSchemaValid(String schemaText, String jsonText) throws ProcessingException, IOException
     {   
         final JsonSchema schemaNode = getSchemaNode(schemaText);
@@ -96,13 +66,7 @@ public class ValidationUtils {
         return isJsonValid(schemaNode, jsonNode);
     } // validateJson(Node) ends
  
-       
-    public static void validateJson(String schemaText, String jsonText) throws IOException, ProcessingException{
-        final JsonSchema schemaNode = getSchemaNode(schemaText);
-        final JsonNode jsonNode = getJsonNode(jsonText);
-        validateJson(schemaNode, jsonNode);
-    } // validateJson(text) ends
-    
+  
     private static JsonSchema _getSchemaNode(JsonNode jsonNode)
     throws ProcessingException
     {
@@ -115,6 +79,13 @@ public class ValidationUtils {
         return factory.getJsonSchema(jsonNode);
     } // _getSchemaNode() ends
     
+    
+    /**
+     * reading file as a string
+     * @param filePath
+     * @return
+     * @throws IOException
+     */
     public static String readFileAsString(String filePath) throws IOException {
         StringBuffer fileData = new StringBuffer();
         BufferedReader reader = new BufferedReader(
